@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   height="32"
+   version="1.1"
+   viewBox="0 0 20 32"
+   width="20"
+   id="svg9"
+   sodipodi:docname="mapPin.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata13">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview11"
+     showgrid="false"
+     inkscape:zoom="7.2920387"
+     inkscape:cx="-2.9258123"
+     inkscape:cy="-16.333762"
+     inkscape:current-layer="svg9" />
+  <defs
+     id="defs4" />
+  <g
+     id="Icons with numbers"
+     transform="matrix(2,0,0,2,-6,0)"
+     style="fill:#c00000;fill-rule:evenodd;stroke:none;stroke-width:0.5;fill-opacity:1">
+    <g
+       id="Group"
+       transform="translate(-288,-192)"
+       style="fill:#c00000;stroke-width:0.33333334;fill-opacity:1">
+      <path
+         d="M 291.02038,198 C 291.00689,197.83531 291,197.66854 291,197.5 c 0,-3.03757 2.23858,-5.5 5,-5.5 2.76142,0 5,2.46243 5,5.5 0,0.16854 -0.007,0.33531 -0.0204,0.5 H 301 c 0,3.00574 -5,10 -5,10 0,0 -5,-6.97766 -5,-10 z M 296,199 c 1.10457,0 2,-0.89543 2,-2 0,-1.10457 -0.89543,-2 -2,-2 -1.10457,0 -2,0.89543 -2,2 0,1.10457 0.89543,2 2,2 z m 0,0"
+         id="Oval 208"
+         inkscape:connector-curvature="0"
+         style="stroke-width:0.5;fill:#c00000;fill-opacity:1" />
+    </g>
+  </g>
+</svg>

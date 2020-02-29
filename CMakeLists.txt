@@ -1,0 +1,33 @@
+cmake_minimum_required( VERSION 3.9.0 )
+project( Flugbuch )
+
+set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR} )
+set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR} )
+
+set( Flugbuch_VERSION_MAJOR 1 )
+set( Flugbuch_VERSION_MINOR 0 )
+set( Flugbuch_VERSION_PATCH 0 )
+
+include( scripts/thirdparty.cmake )
+
+include( CTest )
+enable_testing()
+
+set( CMAKE_INCLUDE_CURRENT_DIR ON )
+set( CMAKE_AUTOMOC ON )
+set( CMAKE_AUTOUIC ON )
+set( CMAKE_AUTORCC ON )
+include_directories( "${Flugbuch_SOURCE_DIR}" )
+
+add_subdirectory( core )
+add_subdirectory( widgets )
+add_subdirectory( app )
+
+set( CPACK_GENERATOR "ZIP" )
+set( CPACK_PACKAGE_VENDOR "Schiffler" )
+set( CPACK_PACKAGE_DESCRIPTION_SUMMARY "It's great" )
+set( CPACK_PACKAGE_VERSION ${Flugbuch_VERSION_MAJOR}.${Flugbuch_VERSION_MINOR}.${Flugbuch_VERSION_PATCH}-${CMAKE_BUILD_TYPE} )
+set( CPACK_PACKAGE_VERSION_MAJOR ${Flugbuch_VERSION_MAJOR} )
+set( CPACK_PACKAGE_VERSION_MINOR ${Flugbuch_VERSION_MINOR} )
+set( CPACK_PACKAGE_VERSION_PATCH ${Flugbuch_VERSION_PATCH} )
+include( CPack )
