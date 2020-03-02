@@ -13,14 +13,12 @@
 
 MainWindow::MainWindow( QWidget* parent ) : QMainWindow( parent ), ui( new Ui::MainWindow ) {
     ui->setupUi( this );
-    ui->flightList->setModel( &flm_ );
-    ui->planeList->setModel( &plm_ );
-    ui->locationList->setModel( &llm_ );
+    ui->flightList->setModel( &flightListModel_ );
+    ui->planeList->setModel( &planeListModel_ );
+    ui->locationList->setModel( &locationListModel_ );
     ui->tabWidget->setCurrentIndex( 0 );
 
-    ui->mapWidget->setSource( QUrl::fromLocalFile( "map.qml" ) );
-
-    ui->toolBar->addAction( ui->actionCreateFlight );
+    ui->mapWidget->setSource( QUrl::fromLocalFile( ":/widgets/map.qml" ) );
 
     updateActions();
 }
@@ -31,6 +29,10 @@ MainWindow::~MainWindow() {
 
 void MainWindow::on_actionNew_triggered() {
     auto filename = QFileDialog::getSaveFileName( this, tr( "Speichern" ), "", "*.log" );
+
+    if( filename.isEmpty() ) {
+        return;
+    }
 
     QFile file( filename );
     if( file.exists() ) {
@@ -47,9 +49,9 @@ void MainWindow::on_actionOpen_triggered() {
 
     auto filename = QFileDialog::getOpenFileName( this, tr( "Öffnen" ), lastDir, "*.log" );
     store_ = std::make_shared< persistence::sql::SqLiteStore >( filename );
-    flm_.set( store_->flights() );
-    plm_.set( store_->planes() );
-    llm_.set( store_->locations() );
+    flightListModel_.set( store_->flights() );
+    planeListModel_.set( store_->planes() );
+    locationListModel_.set( store_->locations() );
     updateActions();
 
     settings.setValue( "LastDir", QFileInfo( filename ).path() );
@@ -59,56 +61,46 @@ void MainWindow::on_actionSave_triggered() {
     store_->save();
 }
 
-void MainWindow::on_actionCreateFlight_triggered() {
-    auto flight = std::make_shared< domain::Flight >();
-    flight->setStartTime( QDateTime::currentDateTime() );
-    flight->setEndTime( QDateTime::currentDateTime() );
-
-    FlightDialog dlg( store_, flight, this );
-    if( dlg.exec() == QDialog::Accepted ) {
-        store_->upsert( flight );
-        flm_.add( flight );
-        plm_.set( store_->planes() );
-        llm_.set( store_->locations() );
+void MainWindow::on_actionSaveAs_triggered() {
+    auto oldStore = store_;
+    on_actionNew_triggered();
+    if( store_ == oldStore ) {
+        return;
     }
-}
 
-void MainWindow::on_actionCreatePlane_triggered() {
-    auto plane = std::make_shared< domain::Plane >();
-    PlaneDialog dlg( plane, this );
-    if( dlg.exec() == QDialog::Accepted ) {
-        if( store_->upsert( plane ) ) {
-            plm_.add( plane );
-        }
+    auto flights = oldStore->flights();
+    for( const auto& f : flights ) {
+        store_->upsert( f );
     }
-}
 
-void MainWindow::on_actionCreateLocation_triggered() {
-    auto loc = std::make_shared< domain::Location >();
-    LocationDialog dlg( loc, this );
-    if( dlg.exec() == QDialog::Accepted ) {
-        if( store_->upsert( loc ) ) {
-            llm_.add( loc );
-        }
+    auto planes = oldStore->planes();
+    for( const auto& p : planes ) {
+        store_->upsert( p );
     }
+
+    auto locs = oldStore->locations();
+    for( const auto& l : locs ) {
+        store_->upsert( l );
+    }
+    store_->save();
 }
 
 void MainWindow::on_flightList_doubleClicked( const QModelIndex& index ) {
-    auto flight = flm_.flight( index );
+    auto flight = flightListModel_.flight( index );
     FlightDialog dlg( store_, flight, this );
     dlg.exec();
-    plm_.set( store_->planes() );
-    llm_.set( store_->locations() );
+    planeListModel_.set( store_->planes() );
+    locationListModel_.set( store_->locations() );
 }
 
 void MainWindow::on_planeList_doubleClicked( const QModelIndex& index ) {
-    auto plane = plm_.plane( index );
+    auto plane = planeListModel_.plane( index );
     PlaneDialog dlg( plane, this );
     dlg.exec();
 }
 
 void MainWindow::on_locationList_doubleClicked( const QModelIndex& index ) {
-    auto loc = llm_.location( index );
+    auto loc = locationListModel_.location( index );
     LocationDialog dlg( loc, this );
     dlg.exec();
 }
@@ -117,16 +109,14 @@ void MainWindow::updateActions() {
     ui->actionSave->setEnabled( store_ != nullptr );
     ui->actionSaveAs->setEnabled( store_ != nullptr );
 
-    ui->actionCreateFlight->setEnabled( store_ != nullptr );
-    ui->actionCreatePlane->setEnabled( store_ != nullptr );
-    ui->actionCreateLocation->setEnabled( store_ != nullptr );
+    ui->tabWidget->setEnabled( store_ != nullptr );
 }
 
 void MainWindow::on_planeList_clicked( const QModelIndex& index ) {
 }
 
 void MainWindow::on_locationList_clicked( const QModelIndex& index ) {
-    auto loc = llm_.location( index );
+    auto loc = locationListModel_.location( index );
     auto c = loc->location();
 
     QVariant returnedValue;
@@ -138,7 +128,7 @@ void MainWindow::on_locationList_clicked( const QModelIndex& index ) {
 }
 
 void MainWindow::on_flightList_clicked( const QModelIndex& index ) {
-    auto flight = flm_.flight( index );
+    auto flight = flightListModel_.flight( index );
     auto c1 = flight->startLocation()->location();
     auto c2 = flight->endLocation()->location();
 
@@ -158,4 +148,68 @@ void MainWindow::on_actionMapOsm_triggered() {
 
 void MainWindow::on_actionMapEsri_triggered() {
     ui->mapWidget->rootObject()->setProperty( "map", "esri" );
+}
+
+void MainWindow::on_newFlightButton_clicked() {
+    auto flight = std::make_shared< domain::Flight >();
+    flight->setStartTime( QDateTime::currentDateTime() );
+    flight->setEndTime( QDateTime::currentDateTime() );
+
+    FlightDialog dlg( store_, flight, this );
+    if( dlg.exec() == QDialog::Accepted ) {
+        store_->upsert( flight );
+        flightListModel_.add( flight );
+    }
+    planeListModel_.set( store_->planes() );
+    locationListModel_.set( store_->locations() );
+}
+
+void MainWindow::on_editFlightButton_clicked() {
+    if( !ui->flightList->currentIndex().isValid() ) {
+        return;
+    }
+    on_flightList_doubleClicked( ui->flightList->currentIndex() );
+}
+
+void MainWindow::on_removeFlightButton_clicked() {
+}
+
+void MainWindow::on_newLocationButton_clicked() {
+    auto loc = std::make_shared< domain::Location >();
+    LocationDialog dlg( loc, this );
+    if( dlg.exec() == QDialog::Accepted ) {
+        if( store_->upsert( loc ) ) {
+            locationListModel_.add( loc );
+        }
+    }
+}
+
+void MainWindow::on_editLocationButton_clicked() {
+    if( !ui->locationList->currentIndex().isValid() ) {
+        return;
+    }
+    on_locationList_doubleClicked( ui->locationList->currentIndex() );
+}
+
+void MainWindow::on_removeLocationButton_clicked() {
+}
+
+void MainWindow::on_newPlaneButton_clicked() {
+    auto plane = std::make_shared< domain::Plane >();
+    PlaneDialog dlg( plane, this );
+    if( dlg.exec() == QDialog::Accepted ) {
+        if( store_->upsert( plane ) ) {
+            planeListModel_.add( plane );
+        }
+    }
+}
+
+void MainWindow::on_editPlaneButton_clicked() {
+    if( !ui->planeList->currentIndex().isValid() ) {
+        return;
+    }
+    on_planeList_doubleClicked( ui->planeList->currentIndex() );
+}
+
+void MainWindow::on_removePlaneButton_clicked() {
 }

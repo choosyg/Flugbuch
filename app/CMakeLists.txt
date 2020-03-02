@@ -1,4 +1,4 @@
-add_executable( FlugbuchApp main.cpp ../resources.qrc )
+add_executable( FlugbuchApp main.cpp ../resources.qrc ../project.rc )
 target_link_libraries( FlugbuchApp
     widgets
 )

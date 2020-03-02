@@ -1,5 +1,13 @@
 <RCC>
     <qresource prefix="/">
         <file>icons/mapPin.svg</file>
+        <file>style.css</file>
+        <file>widgets/map.qml</file>
+        <file>icons/hsplitter.svg</file>
+        <file>icons/vsplitter.svg</file>
+        <file>icons/edit.svg</file>
+        <file>icons/new.svg</file>
+        <file>icons/remove.svg</file>
+        <file>icons/logo.svg</file>
     </qresource>
 </RCC>

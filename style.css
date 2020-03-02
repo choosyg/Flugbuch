@@ -1,0 +1,75 @@
+QMainWindow{
+    background: white;
+}
+
+QToolButton {
+    background: white;
+    border: none;
+    padding: 2px;
+}
+
+QToolButton:hover {
+    background: white;
+    border: 1px solid #C4C4C3;
+    border-radius: 4px;
+}
+
+QSplitter {
+    background: white;
+}
+
+QSplitter#vSplitter {
+    padding-left: 8px;
+}
+
+QSplitter::handle:horizontal {
+    width: 8px;
+    image: url( :/icons/hsplitter.svg);
+}
+
+QSplitter::handle:vertical {
+    height: 8px;
+    image: url( :/icons/vsplitter.svg);
+}
+
+QListView {
+    border: 1px solid #C4C4C3;
+}
+
+QListView::item {
+    height: 30px;
+}
+
+QListView::item:selected {
+    color: black;
+    background: #CEE3F6;
+}
+
+QTabWidget::pane {
+    border: none;
+}
+
+QTabWidget::tab-bar {
+    alignment: center;
+}
+
+QTabBar::tab {
+    background: #FFFFFF;
+    border: none;
+    border-right: 1px solid #C4C4C3;
+    min-width: 60px;
+    margin-top: 5px;
+    padding: 4px;
+}
+
+QTabBar::tab:last {
+    border-right: none;
+}
+
+QTabBar::tab:selected, QTabBar::tab:hover {
+    background: #CEE3F6;
+}
+
+QTabBar::tab:only-one {
+    border: none;
+}

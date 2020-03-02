@@ -13,8 +13,15 @@
   <property name="windowTitle">
    <string>Flugbuch</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../resources.qrc">
+    <normaloff>:/icons/logo.svg</normaloff>:/icons/logo.svg</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -32,19 +39,34 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QSplitter" name="splitter">
+      <property name="childrenCollapsible">
+       <bool>false</bool>
+      </property>
+      <widget class="QSplitter" name="vSplitter">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
+       <property name="childrenCollapsible">
+        <bool>false</bool>
+       </property>
        <widget class="QTabWidget" name="tabWidget">
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>250</height>
+         </size>
+        </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="flightsTab">
          <attribute name="title">
           <string>Flüge</string>
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -57,6 +79,59 @@
           <property name="bottomMargin">
            <number>0</number>
           </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QToolButton" name="newFlightButton">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources.qrc">
+                <normaloff>:/icons/new.svg</normaloff>:/icons/new.svg</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="editFlightButton">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources.qrc">
+                <normaloff>:/icons/edit.svg</normaloff>:/icons/edit.svg</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="removeFlightButton">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources.qrc">
+                <normaloff>:/icons/remove.svg</normaloff>:/icons/remove.svg</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
           <item>
            <widget class="QListView" name="flightList">
             <property name="sizePolicy">
@@ -74,6 +149,9 @@
           <string>Gelände</string>
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_4">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -87,6 +165,59 @@
            <number>0</number>
           </property>
           <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QToolButton" name="newLocationButton">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources.qrc">
+                <normaloff>:/icons/new.svg</normaloff>:/icons/new.svg</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="editLocationButton">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources.qrc">
+                <normaloff>:/icons/edit.svg</normaloff>:/icons/edit.svg</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="removeLocationButton">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources.qrc">
+                <normaloff>:/icons/remove.svg</normaloff>:/icons/remove.svg</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
            <widget class="QListView" name="locationList"/>
           </item>
          </layout>
@@ -96,6 +227,9 @@
           <string>Geräte</string>
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -108,6 +242,59 @@
           <property name="bottomMargin">
            <number>0</number>
           </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QToolButton" name="newPlaneButton">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources.qrc">
+                <normaloff>:/icons/new.svg</normaloff>:/icons/new.svg</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="editPlaneButton">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources.qrc">
+                <normaloff>:/icons/edit.svg</normaloff>:/icons/edit.svg</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="removePlaneButton">
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resources.qrc">
+                <normaloff>:/icons/remove.svg</normaloff>:/icons/remove.svg</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
           <item>
            <widget class="QListView" name="planeList"/>
           </item>
@@ -178,14 +365,6 @@
     <addaction name="actionSaveAs"/>
     <addaction name="actionBeenden"/>
    </widget>
-   <widget class="QMenu" name="menuErstellen">
-    <property name="title">
-     <string>Erstellen</string>
-    </property>
-    <addaction name="actionCreateFlight"/>
-    <addaction name="actionCreateLocation"/>
-    <addaction name="actionCreatePlane"/>
-   </widget>
    <widget class="QMenu" name="menuKarte">
     <property name="title">
      <string>Karte</string>
@@ -194,7 +373,6 @@
     <addaction name="actionMapEsri"/>
    </widget>
    <addaction name="menuDatei"/>
-   <addaction name="menuErstellen"/>
    <addaction name="menuKarte"/>
   </widget>
   <action name="actionOpen">
@@ -222,21 +400,6 @@
     <string>Beenden</string>
    </property>
   </action>
-  <action name="actionCreateFlight">
-   <property name="text">
-    <string>Flug</string>
-   </property>
-  </action>
-  <action name="actionCreateLocation">
-   <property name="text">
-    <string>Gelände</string>
-   </property>
-  </action>
-  <action name="actionCreatePlane">
-   <property name="text">
-    <string>Gerät</string>
-   </property>
-  </action>
   <action name="actionMapOsm">
    <property name="text">
     <string>Open Street Map</string>
@@ -256,7 +419,9 @@
    <header location="global">QtQuickWidgets/QQuickWidget</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionBeenden</sender>
